@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
-    [Route("/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ErrorController : ControllerBase
     {

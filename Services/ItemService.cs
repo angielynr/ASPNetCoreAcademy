@@ -1,8 +1,8 @@
 ﻿namespace Services
 {
-    public static class ItemService
+    public class ItemService
     {
-        public static IEnumerable<string> GetAll(int userId)
+        public IEnumerable<string> GetAll(int userId)
         {
             return new List<string>(userId);
         }

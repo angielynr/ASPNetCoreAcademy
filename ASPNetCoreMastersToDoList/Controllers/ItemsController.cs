@@ -8,7 +8,6 @@ namespace ASPNetCoreMastersToDoList.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private static int userId;
 
         [HttpGet]
         public IEnumerable<string> Get(int userId)
@@ -16,11 +15,12 @@ namespace ASPNetCoreMastersToDoList.Controllers
             return new List<string>(userId);
         }
 
-        public static void GetAll()
+        [HttpGet]
+        public IEnumerable<string> GetAll()
         {
-            ItemService.GetAll(userId);
+            //ItemService.GetAll(userId);
+            var itemService = new ItemService();
+            return itemService.GetAll(2);
         }
-
-
     }
 }
