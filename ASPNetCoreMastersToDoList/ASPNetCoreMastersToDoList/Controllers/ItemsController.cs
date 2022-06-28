@@ -1,26 +1,29 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ASPNetCoreMastersToDoList.BindingModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Services.DTO;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class ItemsController : ControllerBase
     {
-        private static int userId;
-
-        [HttpGet]
-        public IEnumerable<string> Get(int userId)
+        public int Get(int userId)
         {
-            return new List<string>(userId);
+            var itemService = new ItemService();
+            itemService.GetAll();
+
+            return userId;
         }
 
-        public static void GetAll()
+        public void Post(ItemCreateBindingModel item)
         {
-            ItemService.GetAll(userId);
+            var itemService = new ItemService();
+
+            var itemDTO = new ItemDTO();
+            itemDTO.Text = item.Text;
+
+            itemService.Save(itemDTO);
         }
-
-
     }
 }

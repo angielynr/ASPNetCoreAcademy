@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,10 +24,17 @@ else
     app.UseExceptionHandler("/error");
 }
 
+app.UseRouting();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller}/{ action}/{id?}");
+});
 
 app.Run();
