@@ -9,6 +9,7 @@ namespace Services.DTO
 {
     public class ItemDTO
     {
+        public int id { get; set; }
         public string Text { get; set; }
     }
 }
