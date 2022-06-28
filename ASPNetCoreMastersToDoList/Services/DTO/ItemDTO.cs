@@ -10,11 +10,5 @@ namespace Services.DTO
     public class ItemDTO
     {
         public string Text { get; set; }
-
-        public void MapDomainModel()
-        {
-            var itemDTO = new Item();
-            itemDTO.Text = Text;
-        }
     }
 }

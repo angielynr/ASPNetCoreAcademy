@@ -16,10 +16,14 @@ namespace ASPNetCoreMastersToDoList.Controllers
             return userId;
         }
 
-        public void Post(ItemCreateBindingModel itemCreateBindingModel)
+        public void Post(ItemCreateBindingModel item)
         {
-            var dto = new ItemDTO();
-            dto.Text = itemCreateBindingModel.Text;
+            var itemService = new ItemService();
+
+            var itemDTO = new ItemDTO();
+            itemDTO.Text = item.Text;
+
+            itemService.Save(itemDTO);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Services.DTO;
+﻿using DomainModels;
+using Services.DTO;
 
 namespace Services
 {
@@ -8,11 +9,10 @@ namespace Services
         {
 
         }
-        public void Save()
+        public void Save(ItemDTO itemDTO)
         {
-            //var itemsController = new ItemsController();
-            var itemDTO = new ItemDTO();
-            itemDTO.MapDomainModel();
+            var item = new Item();
+            item.Text = itemDTO.Text;
         }
     }
 }
