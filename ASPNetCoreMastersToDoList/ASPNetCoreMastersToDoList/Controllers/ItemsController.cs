@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Services.DTO;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
@@ -9,13 +10,16 @@ namespace ASPNetCoreMastersToDoList.Controllers
     {
         public int Get(int userId)
         {
-            ItemService.GetAll();
+            var itemService = new ItemService();
+            itemService.GetAll();
+
             return userId;
         }
 
-        public void Post(ItemCreateBindingModel createModel)
+        public void Post(ItemCreateBindingModel itemCreateBindingModel)
         {
-            //mapped to an itemDTO for the iteam service save method to consume
+            var dto = new ItemDTO();
+            dto.Text = itemCreateBindingModel.Text;
         }
     }
 }

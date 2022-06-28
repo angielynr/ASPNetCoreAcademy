@@ -5,16 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.DTO
+namespace DomainModels
 {
-    public class ItemDTO
+    public class Item
     {
         public string Text { get; set; }
-
-        public void MapDomainModel()
-        {
-            var itemDTO = new Item();
-            itemDTO.Text = Text;
-        }
     }
 }

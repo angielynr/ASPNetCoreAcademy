@@ -1,14 +1,18 @@
-﻿namespace Services
+﻿using Services.DTO;
+
+namespace Services
 {
-    public static class ItemService
+    public class ItemService
     {
-        public static void GetAll()
+        public void GetAll()
         {
 
         }
-        public static void Save()
+        public void Save()
         {
-
+            //var itemsController = new ItemsController();
+            var itemDTO = new ItemDTO();
+            itemDTO.MapDomainModel();
         }
     }
 }
