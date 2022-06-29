@@ -30,11 +30,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller}/{ action}/{id?}");
-});
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//                name: "default",
+//                pattern: "{controller}/{ action}/{id?}");
+//});
+
+app.MapControllers();
 
 app.Run();

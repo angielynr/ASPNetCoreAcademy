@@ -6,24 +6,78 @@ using Services.DTO;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
+    [Route("items")]
+    [ApiController]
     public class ItemsController : ControllerBase
     {
-        public int Get(int userId)
+        //public int Get(int userId)
+        //{
+        //    var itemService = new ItemService();
+        //    itemService.GetAll();
+
+        //    return userId;
+        //}
+
+        //public void Post(ItemCreateBindingModel item)
+        //{
+        //    var itemService = new ItemService();
+
+        //    var itemDTO = new ItemDTO();
+        //    itemDTO.Text = item.Text;
+
+        //    itemService.Save(itemDTO);
+        //}
+
+        [HttpGet]
+        public IActionResult GetAll()
         {
             var itemService = new ItemService();
-            itemService.GetAll();
+            var items = itemService.GetAll();
 
-            return userId;
+            return Ok(items);
         }
 
-        public void Post(ItemCreateBindingModel item)
+        [HttpGet("{itemId}")]
+        public IActionResult Get(int itemId)
+        {
+            return Get(itemId);
+        }
+
+        [HttpGet("filterBy")]
+        public IActionResult GetByFilters([FromQuery] Dictionary<string, string> filters)
         {
             var itemService = new ItemService();
+            return Ok(itemService.GetByFilters(filters));
+        }
 
+        [HttpPost]
+        public IActionResult Post([FromBody] ItemCreateBindingModel itemCreateBindingModel)
+        {
+            var itemService = new ItemService();
             var itemDTO = new ItemDTO();
-            itemDTO.Text = item.Text;
 
+            itemDTO.Text = itemCreateBindingModel.Text;
             itemService.Save(itemDTO);
+            return Ok();
+        }
+
+        [HttpPut("{itemId}")]
+        public IActionResult Put(int Id, [FromBody] ItemUpdateBindingModel itemUpdateBinding)
+        {
+            var itemService = new ItemService();
+            var itemDTO = new ItemDTO();
+
+            itemDTO.id = itemUpdateBinding.Id;
+            itemDTO.Text = itemUpdateBinding.Text;
+
+            itemService.Update(itemDTO);
+            return Ok();
+        }
+
+        [HttpDelete("{itemId}")]
+        public IActionResult Delete(int itemId)
+        {
+            return Delete(itemId);
         }
     }
 }
