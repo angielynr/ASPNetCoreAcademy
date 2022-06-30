@@ -6,26 +6,27 @@ namespace Services
 {
     public class ItemService : IItemService
     {
+        private readonly IItemRepository _ItemRepository;
+
+        public ItemService(IItemRepository itemRepository)
+        {
+            _ItemRepository = itemRepository;
+        }
+
         public IEnumerable<ItemDTO> GetAll()
         {
-            List<ItemDTO> items = new List<ItemDTO>();
-            items.Add(new ItemDTO()
-            {
-                Id = 2,
-                Text = "Two"
-            });
-            items.Add(new ItemDTO()
-            {
-                Id = 3,
-                Text = "Twodfds"
-            });
-            items.Add(new ItemDTO()
-            {
-                Id = 4,
-                Text = "Twdsfsdo"
-            });
+            List<ItemDTO> itemsDTO = new List<ItemDTO>();
 
-            return items;
+            var items = _ItemRepository.All();
+            foreach (var item in items)
+            {
+                itemsDTO.Add(new ItemDTO()
+                {
+                    Id = item.Id,
+                    Text = item.Text
+                });
+            }
+            return itemsDTO;
         }
         public void Save(ItemDTO itemDTO)
         {
@@ -44,28 +45,19 @@ namespace Services
             toBeUpdatedItemDTO.Text = itemDTO.Text;
         }
 
-        public void Delete(int itemId)
-        {
-
-        }
-
         public ItemDTO Get(int id)
-        {
-            return new ItemDTO();
-        }
-
-        public void Add(ItemDTO itemDTO)
-        {
-        }
-
-        public IQueryable<Item> All()
         {
             throw new NotImplementedException();
         }
 
-        public void Save(Item item)
+        public void Add(ItemDTO itemDTO)
         {
+            throw new NotImplementedException();
+        }
 
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

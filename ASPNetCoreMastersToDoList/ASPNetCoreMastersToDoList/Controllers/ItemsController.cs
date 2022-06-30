@@ -1,6 +1,7 @@
 ﻿using ASPNetCoreMastersToDoList.BindingModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repositories;
 using Services;
 using Services.DTO;
 
@@ -10,6 +11,13 @@ namespace ASPNetCoreMastersToDoList.Controllers
     [ApiController]
     public class ItemsController : ControllerBase, IItemService
     {
+        private IItemRepository _itemRepository;
+
+        public ItemsController(IItemRepository itemRepository)
+        {
+            _itemRepository = itemRepository;
+        }
+
         //public int Get(int userId)
         //{
         //    var itemService = new ItemService();
@@ -31,7 +39,7 @@ namespace ASPNetCoreMastersToDoList.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var itemService = new ItemService();
+            var itemService = new ItemService(_itemRepository);
             var items = itemService.GetAll();
 
             return Ok(items);
@@ -46,14 +54,14 @@ namespace ASPNetCoreMastersToDoList.Controllers
         [HttpGet("filterBy")]
         public IActionResult GetByFilters([FromQuery] Dictionary<string, string> filters)
         {
-            var itemService = new ItemService();
+            var itemService = new ItemService(_itemRepository);
             return Ok(itemService.GetByFilters(filters));
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] ItemCreateBindingModel itemCreateBindingModel)
         {
-            var itemService = new ItemService();
+            var itemService = new ItemService(_itemRepository);
             var itemDTO = new ItemDTO();
 
             itemDTO.Text = itemCreateBindingModel.Text;
@@ -64,7 +72,7 @@ namespace ASPNetCoreMastersToDoList.Controllers
         [HttpPut("{itemId}")]
         public IActionResult Put(int Id, [FromBody] ItemUpdateBindingModel itemUpdateBinding)
         {
-            var itemService = new ItemService();
+            var itemService = new ItemService(_itemRepository);
             var itemDTO = new ItemDTO();
 
             itemDTO.Id = itemUpdateBinding.Id;

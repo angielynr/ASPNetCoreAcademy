@@ -13,7 +13,7 @@ namespace Services
 
         IEnumerable<ItemDTO> GetByFilters(Dictionary<string, string> filters);
 
-        ItemDTO Get(int id);
+        ItemDTO Get(int itemId);
 
         void Add(ItemDTO itemDTO);
 
