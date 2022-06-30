@@ -8,7 +8,7 @@ namespace ASPNetCoreMastersToDoList.Controllers
 {
     [Route("items")]
     [ApiController]
-    public class ItemsController : ControllerBase
+    public class ItemsController : ControllerBase, IItemService
     {
         //public int Get(int userId)
         //{
@@ -78,6 +78,31 @@ namespace ASPNetCoreMastersToDoList.Controllers
         public IActionResult Delete(int itemId)
         {
             return Delete(itemId);
+        }
+
+        IEnumerable<ItemDTO> IItemService.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<ItemDTO> IItemService.GetByFilters(Dictionary<string, string> dictionary)
+        {
+            throw new NotImplementedException();
+        }
+
+        ItemDTO IItemService.Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(ItemDTO itemDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IItemService.Delete(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

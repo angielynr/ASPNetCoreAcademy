@@ -3,7 +3,7 @@ using Services.DTO;
 
 namespace Services
 {
-    public class ItemService
+    public class ItemService : IItemService
     {
         public IEnumerable<ItemDTO> GetAll()
         {
@@ -48,5 +48,14 @@ namespace Services
 
         }
 
+        public ItemDTO Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(ItemDTO itemDTO)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
