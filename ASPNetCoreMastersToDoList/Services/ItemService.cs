@@ -1,4 +1,5 @@
 ﻿using DomainModels;
+using Repositories;
 using Services.DTO;
 
 namespace Services
@@ -10,17 +11,17 @@ namespace Services
             List<ItemDTO> items = new List<ItemDTO>();
             items.Add(new ItemDTO()
             {
-                id = 2,
+                Id = 2,
                 Text = "Two"
             });
             items.Add(new ItemDTO()
             {
-                id = 3,
+                Id = 3,
                 Text = "Twodfds"
             });
             items.Add(new ItemDTO()
             {
-                id = 4,
+                Id = 4,
                 Text = "Twdsfsdo"
             });
 
@@ -39,7 +40,7 @@ namespace Services
 
         public void Update(ItemDTO itemDTO)
         {
-            var toBeUpdatedItemDTO = this.GetAll().FirstOrDefault(x => x.id == itemDTO.id);
+            var toBeUpdatedItemDTO = this.GetAll().FirstOrDefault(x => x.Id == itemDTO.Id);
             toBeUpdatedItemDTO.Text = itemDTO.Text;
         }
 
@@ -50,12 +51,21 @@ namespace Services
 
         public ItemDTO Get(int id)
         {
-            throw new NotImplementedException();
+            return new ItemDTO();
         }
 
         public void Add(ItemDTO itemDTO)
         {
+        }
+
+        public IQueryable<Item> All()
+        {
             throw new NotImplementedException();
+        }
+
+        public void Save(Item item)
+        {
+
         }
     }
 }

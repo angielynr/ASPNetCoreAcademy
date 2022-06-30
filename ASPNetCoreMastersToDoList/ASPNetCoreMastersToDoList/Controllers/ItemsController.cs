@@ -67,7 +67,7 @@ namespace ASPNetCoreMastersToDoList.Controllers
             var itemService = new ItemService();
             var itemDTO = new ItemDTO();
 
-            itemDTO.id = itemUpdateBinding.Id;
+            itemDTO.Id = itemUpdateBinding.Id;
             itemDTO.Text = itemUpdateBinding.Text;
 
             itemService.Update(itemDTO);
@@ -101,6 +101,11 @@ namespace ASPNetCoreMastersToDoList.Controllers
         }
 
         void IItemService.Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(ItemDTO itemDTO)
         {
             throw new NotImplementedException();
         }

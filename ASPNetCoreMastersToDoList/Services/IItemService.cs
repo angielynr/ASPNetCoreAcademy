@@ -11,11 +11,13 @@ namespace Services
     {
         IEnumerable<ItemDTO> GetAll();
 
-        IEnumerable<ItemDTO> GetByFilters(Dictionary<string, string> dictionary);
+        IEnumerable<ItemDTO> GetByFilters(Dictionary<string, string> filters);
 
         ItemDTO Get(int id);
 
         void Add(ItemDTO itemDTO);
+
+        void Update(ItemDTO itemDTO);
 
         void Delete(int id);
     }

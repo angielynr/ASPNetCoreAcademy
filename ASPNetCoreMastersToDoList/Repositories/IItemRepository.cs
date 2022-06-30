@@ -9,17 +9,10 @@ namespace Repositories
 {
     public interface IItemRepository
     {
-        public IQueryable<Item> All();
-        //var items = new List<Item>();
-        //items.Add(new DataContext()
-        //{
-        //    items = "adsdss"
-        //});
-        //return IQueryable<Item>;
+        IQueryable<Item> All();
 
+        void Save(Item item);
 
-        public void Save(Item item);
-
-        public void Delete(int id);
+        void Delete(int id);
     }
 }

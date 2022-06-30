@@ -17,12 +17,12 @@ namespace Repositories
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+
         }
 
         public void Save(Item item)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
