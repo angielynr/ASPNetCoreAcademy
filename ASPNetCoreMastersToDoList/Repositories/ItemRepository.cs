@@ -10,6 +10,11 @@ namespace Repositories
     public class ItemRepository : IItemRepository
     {
         private readonly DataContext _dataContext;
+
+        public ItemRepository(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
         public IQueryable<Item> All()
         {
             return (IQueryable<Item>)(_dataContext);
