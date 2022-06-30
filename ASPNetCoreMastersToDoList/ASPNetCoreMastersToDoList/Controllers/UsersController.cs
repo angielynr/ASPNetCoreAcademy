@@ -4,9 +4,9 @@ namespace ASPNetCoreMastersToDoList.Controllers
 {
     public class UsersController : Controller
     {
-        public IActionResult Login()
-        {
+        //public IActionResult Login()
+        //{
 
-        }
+        //}
     }
 }

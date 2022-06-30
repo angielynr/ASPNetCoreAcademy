@@ -9,15 +9,15 @@ namespace Repositories
 {
     public class ItemRepository : IItemRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly DataContext _DataContext;
 
         public ItemRepository(DataContext dataContext)
         {
-            _dataContext = dataContext;
+            _DataContext = dataContext;
         }
         public IQueryable<Item> All()
         {
-            return (IQueryable<Item>)(_dataContext);
+            return (IQueryable<Item>)(_DataContext);
         }
 
         public void Delete(int id)
