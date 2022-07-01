@@ -13,15 +13,17 @@ namespace ASPNetCoreMastersToDoList.Controllers
         public UsersController(IOptions<Authentication> options)
         {
             _authentication = options.Value;
-            var securityKey = _authentication.SecurityKey;
-            var issuer = _authentication.Issuer;
-            var audience = _authentication.Audience;
+
         }
 
         [HttpGet]
         public IActionResult Login()
         {
-            return Ok(_authentication.SecurityKey);
+            var securityKey = _authentication.SecurityKey;
+            var issuer = _authentication.Issuer;
+            var audience = _authentication.Audience;
+
+            return Ok(securityKey);
         }
     }
 }
