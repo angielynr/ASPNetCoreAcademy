@@ -11,7 +11,7 @@ namespace Services
     {
         IEnumerable<ItemDTO> GetAll();
 
-        IEnumerable<ItemDTO> GetByFilters(Dictionary<string, string> filters);
+        IEnumerable<ItemDTO> GetAllByFilters(ItemByFilterDTO filters);
 
         ItemDTO Get(int itemId);
 

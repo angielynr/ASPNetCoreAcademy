@@ -10,14 +10,14 @@ namespace Services
 
         public ItemService(IItemRepository itemRepository)
         {
-            _ItemRepository = itemRepository;
+            this._ItemRepository = itemRepository;
         }
 
         public IEnumerable<ItemDTO> GetAll()
         {
+            var items = this._ItemRepository.All();
             List<ItemDTO> itemsDTO = new List<ItemDTO>();
 
-            var items = _ItemRepository.All();
             foreach (var item in items)
             {
                 itemsDTO.Add(new ItemDTO()
@@ -28,34 +28,39 @@ namespace Services
             }
             return itemsDTO;
         }
-        public void Save(ItemDTO itemDTO)
-        {
-            var item = new Item();
-            item.Text = itemDTO.Text;
-        }
-
-        public IEnumerable<ItemDTO> GetByFilters(Dictionary<string, string> dictionary)
-        {
-            return this.GetAll();
-        }
-
-        public void Update(ItemDTO itemDTO)
-        {
-            var toBeUpdatedItemDTO = this.GetAll().FirstOrDefault(x => x.Id == itemDTO.Id);
-            toBeUpdatedItemDTO.Text = itemDTO.Text;
-        }
 
         public ItemDTO Get(int id)
         {
-            throw new NotImplementedException();
+            var displayText = this._ItemRepository.All().Where(x => x.Id == id).FirstOrDefault();
+            var result = new ItemDTO();
+            result.Id = id;
+            result.Text = displayText.Text;
+            return result;
         }
 
         public void Add(ItemDTO itemDTO)
         {
-            throw new NotImplementedException();
+            var item = new Item();
+            var getLastIdValue = _ItemRepository.All().Last();
+            item.Id = getLastIdValue.Id++;
+            item.Text = itemDTO.Text;
+            this._ItemRepository.Save(item);
         }
 
         public void Delete(int id)
+        {
+            this._ItemRepository.Delete(id);
+        }
+
+        public void Update(ItemDTO itemDTO)
+        {
+            var item = new Item();
+            item.Id = itemDTO.Id;
+            item.Text = itemDTO.Text;
+            this._ItemRepository.Save(item);
+        }
+
+        public IEnumerable<ItemDTO> GetAllByFilters(ItemByFilterDTO filters)
         {
             throw new NotImplementedException();
         }

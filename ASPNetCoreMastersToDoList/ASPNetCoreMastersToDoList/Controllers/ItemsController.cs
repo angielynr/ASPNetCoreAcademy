@@ -9,13 +9,60 @@ namespace ASPNetCoreMastersToDoList.Controllers
 {
     [Route("items")]
     [ApiController]
-    public class ItemsController : ControllerBase, IItemService
+    public class ItemsController : ControllerBase
     {
-        private IItemRepository _itemRepository;
+        private readonly IItemService _itemService;
 
-        public ItemsController(IItemRepository itemRepository)
+        public ItemsController(IItemService itemService)
         {
-            _itemRepository = itemRepository;
+            _itemService = itemService;
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var items = _itemService.GetAll();
+            return Ok(items);
+        }
+
+        [HttpGet("{itemId}")]
+        public IActionResult Get(int itemId)
+        {
+            var item = this._itemService.Get(itemId);
+            return Ok(item);
+        }
+
+        //[HttpGet("filterBy")]
+        //public IActionResult GetByFilters([FromQuery] Dictionary<string, string> filters)
+        //{
+        //    var itemService = new ItemService(_itemRepository);
+        //    return Ok(itemService.GetByFilters(filters));
+        //}
+
+        [HttpPost]
+        public IActionResult Post([FromBody] ItemCreateBindingModel itemCreateBindingModel)
+        {
+            var itemDTO = new ItemDTO();
+            itemDTO.Text = itemCreateBindingModel.Text;
+            this._itemService.Add(itemDTO);
+            return Ok();
+        }
+
+        [HttpPut("{itemId}")]
+        public IActionResult Put(int Id, [FromBody] ItemUpdateBindingModel itemUpdateBinding)
+        {
+            var itemDTO = new ItemDTO();
+            itemDTO.Text = itemUpdateBinding.Text;
+            itemDTO.Id = itemUpdateBinding.Id;
+            this._itemService.Update(itemDTO);
+            return Ok();
+        }
+
+        [HttpDelete("{itemId}")]
+        public IActionResult Delete(int itemId)
+        {
+            this._itemService.Delete(itemId);
+            return Ok();
         }
 
         //public int Get(int userId)
@@ -35,87 +82,5 @@ namespace ASPNetCoreMastersToDoList.Controllers
 
         //    itemService.Save(itemDTO);
         //}
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var itemService = new ItemService(_itemRepository);
-            var items = itemService.GetAll();
-
-            return Ok(items);
-        }
-
-        [HttpGet("{itemId}")]
-        public IActionResult Get(int itemId)
-        {
-            return Get(itemId);
-        }
-
-        [HttpGet("filterBy")]
-        public IActionResult GetByFilters([FromQuery] Dictionary<string, string> filters)
-        {
-            var itemService = new ItemService(_itemRepository);
-            return Ok(itemService.GetByFilters(filters));
-        }
-
-        [HttpPost]
-        public IActionResult Post([FromBody] ItemCreateBindingModel itemCreateBindingModel)
-        {
-            var itemService = new ItemService(_itemRepository);
-            var itemDTO = new ItemDTO();
-
-            itemDTO.Text = itemCreateBindingModel.Text;
-            itemService.Save(itemDTO);
-            return Ok();
-        }
-
-        [HttpPut("{itemId}")]
-        public IActionResult Put(int Id, [FromBody] ItemUpdateBindingModel itemUpdateBinding)
-        {
-            var itemService = new ItemService(_itemRepository);
-            var itemDTO = new ItemDTO();
-
-            itemDTO.Id = itemUpdateBinding.Id;
-            itemDTO.Text = itemUpdateBinding.Text;
-
-            itemService.Update(itemDTO);
-            return Ok();
-        }
-
-        [HttpDelete("{itemId}")]
-        public IActionResult Delete(int itemId)
-        {
-            return Delete(itemId);
-        }
-
-        IEnumerable<ItemDTO> IItemService.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<ItemDTO> IItemService.GetByFilters(Dictionary<string, string> dictionary)
-        {
-            throw new NotImplementedException();
-        }
-
-        ItemDTO IItemService.Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Add(ItemDTO itemDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IItemService.Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(ItemDTO itemDTO)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
