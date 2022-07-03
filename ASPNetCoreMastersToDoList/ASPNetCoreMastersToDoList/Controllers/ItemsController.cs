@@ -35,8 +35,8 @@ namespace ASPNetCoreMastersToDoList.Controllers
         //[HttpGet("filterBy")]
         //public IActionResult GetByFilters([FromQuery] Dictionary<string, string> filters)
         //{
-        //    var itemService = new ItemService(_itemRepository);
-        //    return Ok(itemService.GetByFilters(filters));
+        //    var itemFiltered = _itemService.GetAllByFilters(filters);
+        //    return Ok(itemFiltered);
         //}
 
         [HttpPost]
