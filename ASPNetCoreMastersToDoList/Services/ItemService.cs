@@ -33,12 +33,12 @@ namespace Services
 
         public ItemDTO Get(int id)
         {
-            var displayText = this._itemRepository.All().Where(x => x.Id == id).FirstOrDefault();
+            var item = this._itemRepository.All().Where(x => x.Id == id).FirstOrDefault();
 
             var result = new ItemDTO();
 
             result.Id = id;
-            result.Text = displayText.Text;
+            result.Text = item.Text;
 
             return result;
         }
