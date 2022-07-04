@@ -6,16 +6,17 @@ namespace Services
 {
     public class ItemService : IItemService
     {
-        private readonly IItemRepository _ItemRepository;
+        private readonly IItemRepository _itemRepository;
 
         public ItemService(IItemRepository itemRepository)
         {
-            this._ItemRepository = itemRepository;
+            this._itemRepository = itemRepository;
         }
 
         public IEnumerable<ItemDTO> GetAll()
         {
-            var items = this._ItemRepository.All();
+            var items = this._itemRepository.All();
+
             List<ItemDTO> itemsDTO = new List<ItemDTO>();
 
             foreach (var item in items)
@@ -26,43 +27,61 @@ namespace Services
                     Text = item.Text
                 });
             }
+
             return itemsDTO;
         }
 
         public ItemDTO Get(int id)
         {
-            var displayText = this._ItemRepository.All().Where(x => x.Id == id).FirstOrDefault();
+            var displayText = this._itemRepository.All().Where(x => x.Id == id).FirstOrDefault();
+
             var result = new ItemDTO();
+
             result.Id = id;
             result.Text = displayText.Text;
+
             return result;
         }
 
         public void Add(ItemDTO itemDTO)
         {
             var item = new Item();
-            var getLastIdValue = _ItemRepository.All().Last();
+
+            var getLastIdValue = _itemRepository.All().Last();
+
             item.Id = getLastIdValue.Id++;
             item.Text = itemDTO.Text;
-            this._ItemRepository.Save(item);
+
+            this._itemRepository.Save(item);
         }
 
         public void Delete(int id)
         {
-            this._ItemRepository.Delete(id);
+            this._itemRepository.Delete(id);
         }
 
         public void Update(ItemDTO itemDTO)
         {
             var item = new Item();
+
             item.Id = itemDTO.Id;
             item.Text = itemDTO.Text;
-            this._ItemRepository.Save(item);
+
+            this._itemRepository.Save(item);
         }
 
         public IEnumerable<ItemDTO> GetAllByFilters(ItemByFilterDTO filters)
         {
-            throw new NotImplementedException();
+            var items = _itemRepository.All();
+
+            if (!string.IsNullOrEmpty(filters.Text))
+            {
+                items = items.Where(r => r.Text.ToLower().Contains(filters.Text.ToLower()));
+            }
+
+            var itemDTOs = items.AsEnumerable().Select(r => new ItemDTO() { Id = r.Id, Text = r.Text });
+
+            return itemDTOs;
         }
     }
 }
