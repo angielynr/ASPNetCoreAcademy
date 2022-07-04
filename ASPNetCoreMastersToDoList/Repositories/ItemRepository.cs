@@ -9,41 +9,46 @@ namespace Repositories
 {
     public class ItemRepository : IItemRepository
     {
-        private readonly DataContext dataContext;
+        private readonly DataContext _dataContext;
 
         public ItemRepository(DataContext dataContext)
         {
-            this.dataContext = dataContext;
+            this._dataContext = dataContext;
         }
 
         public IQueryable<Item> All()
         {
-            return this.dataContext.Items.AsQueryable();
+            return this._dataContext.Items.AsQueryable();
         }
 
         public void Delete(int id)
         {
-            var itemToBeDeleted = this.dataContext.Items.FirstOrDefault(x => x.Id == id);
+            var itemToBeDeleted = this._dataContext.Items.FirstOrDefault(x => x.Id == id);
 
             if (itemToBeDeleted != null)
             {
-                this.dataContext.Items.Remove(itemToBeDeleted);
+                this._dataContext.Items.Remove(itemToBeDeleted);
             }
         }
 
         public void Save(Item item)
         {
-            this.dataContext.Items.Add(item);
-
-            //if (item.Id == 0)
-            //{
-            //    this.dataContext.Items.Add(item);
-            //}
-            //else
-            //{
-            //    var itemtoBeUpdated = this.dataContext.Items.FirstOrDefault(x => x.Id == item.Id);
-            //    itemtoBeUpdated.Text = item.Text;
-            //}
+            if (item.Id == default)
+            {
+                this._dataContext.Items.Add(item);
+            }
+            else
+            {
+                var itemtoBeUpdated = this._dataContext.Items.FirstOrDefault(x => x.Id == item.Id);
+                if (itemtoBeUpdated == null)
+                {
+                    this._dataContext.Items.Add(item);
+                }
+                else
+                {
+                    itemtoBeUpdated.Text = item.Text;
+                }
+            }
         }
     }
 }

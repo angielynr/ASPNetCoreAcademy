@@ -22,6 +22,7 @@ namespace ASPNetCoreMastersToDoList.Controllers
         public IActionResult GetAll()
         {
             var items = _itemService.GetAll();
+
             return Ok(items);
         }
 
@@ -29,22 +30,27 @@ namespace ASPNetCoreMastersToDoList.Controllers
         public IActionResult Get(int itemId)
         {
             var item = this._itemService.Get(itemId);
+
             return Ok(item);
         }
 
         //[HttpGet("filterBy")]
         //public IActionResult GetByFilters([FromQuery] Dictionary<string, string> filters)
         //{
-        //    var itemService = new ItemService(_itemRepository);
-        //    return Ok(itemService.GetByFilters(filters));
+        //    var item = _itemService.GetAllByFilters(filters);
+
+        //    return Ok(item);
         //}
 
         [HttpPost]
         public IActionResult Post([FromBody] ItemCreateBindingModel itemCreateBindingModel)
         {
             var itemDTO = new ItemDTO();
+
             itemDTO.Text = itemCreateBindingModel.Text;
+
             this._itemService.Add(itemDTO);
+
             return Ok();
         }
 
@@ -52,9 +58,12 @@ namespace ASPNetCoreMastersToDoList.Controllers
         public IActionResult Put(int Id, [FromBody] ItemUpdateBindingModel itemUpdateBinding)
         {
             var itemDTO = new ItemDTO();
+
             itemDTO.Text = itemUpdateBinding.Text;
             itemDTO.Id = itemUpdateBinding.Id;
+
             this._itemService.Update(itemDTO);
+
             return Ok();
         }
 
@@ -62,6 +71,7 @@ namespace ASPNetCoreMastersToDoList.Controllers
         public IActionResult Delete(int itemId)
         {
             this._itemService.Delete(itemId);
+
             return Ok();
         }
 

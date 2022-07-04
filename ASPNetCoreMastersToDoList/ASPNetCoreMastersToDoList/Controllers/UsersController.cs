@@ -13,7 +13,6 @@ namespace ASPNetCoreMastersToDoList.Controllers
         public UsersController(IOptions<Authentication> options)
         {
             _authentication = options.Value;
-
         }
 
         [HttpGet]
