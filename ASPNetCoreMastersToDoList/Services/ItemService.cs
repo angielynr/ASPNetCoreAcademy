@@ -1,52 +1,87 @@
 ﻿using DomainModels;
+using Repositories;
 using Services.DTO;
 
 namespace Services
 {
-    public class ItemService
+    public class ItemService : IItemService
     {
+        private readonly IItemRepository _itemRepository;
+
+        public ItemService(IItemRepository itemRepository)
+        {
+            this._itemRepository = itemRepository;
+        }
+
         public IEnumerable<ItemDTO> GetAll()
         {
-            List<ItemDTO> items = new List<ItemDTO>();
-            items.Add(new ItemDTO()
-            {
-                id = 2,
-                Text = "Two"
-            });
-            items.Add(new ItemDTO()
-            {
-                id = 3,
-                Text = "Twodfds"
-            });
-            items.Add(new ItemDTO()
-            {
-                id = 4,
-                Text = "Twdsfsdo"
-            });
+            var items = this._itemRepository.All();
 
-            return items;
+            List<ItemDTO> itemsDTO = new List<ItemDTO>();
+
+            foreach (var item in items)
+            {
+                itemsDTO.Add(new ItemDTO()
+                {
+                    Id = item.Id,
+                    Text = item.Text
+                });
+            }
+
+            return itemsDTO;
         }
-        public void Save(ItemDTO itemDTO)
+
+        public ItemDTO Get(int id)
+        {
+            var displayText = this._itemRepository.All().Where(x => x.Id == id).FirstOrDefault();
+
+            var result = new ItemDTO();
+
+            result.Id = id;
+            result.Text = displayText.Text;
+
+            return result;
+        }
+
+        public void Add(ItemDTO itemDTO)
         {
             var item = new Item();
+
+            var getLastIdValue = _itemRepository.All().Last();
+
+            item.Id = getLastIdValue.Id++;
             item.Text = itemDTO.Text;
+
+            this._itemRepository.Save(item);
         }
 
-        public IEnumerable<ItemDTO> GetByFilters(Dictionary<string, string> dictionary)
+        public void Delete(int id)
         {
-            return this.GetAll();
+            this._itemRepository.Delete(id);
         }
 
         public void Update(ItemDTO itemDTO)
         {
-            var toBeUpdatedItemDTO = this.GetAll().FirstOrDefault(x => x.id == itemDTO.id);
-            toBeUpdatedItemDTO.Text = itemDTO.Text;
+            var item = new Item();
+
+            item.Id = itemDTO.Id;
+            item.Text = itemDTO.Text;
+
+            this._itemRepository.Save(item);
         }
 
-        public void Delete(int itemId)
+        public IEnumerable<ItemDTO> GetAllByFilters(ItemByFilterDTO filters)
         {
+            var items = _itemRepository.All();
 
+            if (!string.IsNullOrEmpty(filters.Text))
+            {
+                items = items.Where(r => r.Text.ToLower().Contains(filters.Text.ToLower()));
+            }
+
+            var itemDTOs = items.AsEnumerable().Select(r => new ItemDTO() { Id = r.Id, Text = r.Text });
+
+            return itemDTOs;
         }
-
     }
 }

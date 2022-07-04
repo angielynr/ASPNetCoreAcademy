@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.DTO
+namespace Repositories
 {
-    public class ItemDTO
+    public interface IItemRepository
     {
-        public int Id { get; set; }
-        public string Text { get; set; }
+        IQueryable<Item> All();
+        void Save(Item item);
+        void Delete(int id);
     }
 }
