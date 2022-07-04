@@ -1,4 +1,5 @@
 ﻿using ASPNetCoreMastersToDoList.BindingModels;
+using ASPNetCoreMastersToDoList.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
@@ -7,6 +8,7 @@ using Services.DTO;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
+    [GlobalPerformanceFilter]
     [Route("items")]
     [ApiController]
     public class ItemsController : ControllerBase
