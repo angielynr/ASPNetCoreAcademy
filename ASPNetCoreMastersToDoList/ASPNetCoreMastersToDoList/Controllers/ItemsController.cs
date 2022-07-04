@@ -8,7 +8,6 @@ using Services.DTO;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
-    [GlobalPerformanceFilter]
     [Route("items")]
     [ApiController]
     public class ItemsController : ControllerBase
@@ -28,6 +27,7 @@ namespace ASPNetCoreMastersToDoList.Controllers
             return Ok(items);
         }
 
+        [TypeFilter(typeof(ControllerItemExistFilter))]
         [HttpGet("{itemId}")]
         public IActionResult Get(int itemId)
         {

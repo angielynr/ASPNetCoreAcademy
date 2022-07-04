@@ -4,12 +4,18 @@ using Microsoft.Extensions.Hosting;
 using Services;
 using Repositories;
 using ASPNetCoreMastersToDoList.Models;
+using ASPNetCoreMastersToDoList.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<GlobalPerformanceFilter>();
+    //options.Filters.Add<ControllerItemExistFilter>();
+});
+
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddSingleton<DataContext>();
