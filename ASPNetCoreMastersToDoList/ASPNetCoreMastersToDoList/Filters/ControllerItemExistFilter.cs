@@ -17,13 +17,13 @@ namespace ASPNetCoreMastersToDoList.Filters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            var item = (int)context.HttpContext.Items["itemService"];
+            //var item = (int)context.HttpContext.Items["itemService"];
 
-            if (item is 0)
-            {
-                //Console.WriteLine("This is executing");
-                context.Result = new NotFoundResult();
-            };
+            //if (item is 0)
+            //{
+            //    //Console.WriteLine("This is executing");
+            //    context.Result = new NotFoundResult();
+            //};
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
