@@ -1,5 +1,5 @@
-﻿using DomainModels;
-using Repositories;
+﻿using Repositories;
+using Repositories.Entity;
 using Services.DTO;
 
 namespace Services
@@ -47,9 +47,9 @@ namespace Services
         {
             var item = new Item();
 
-            var getLastIdValue = _itemRepository.All().Last();
+            var getLastIdValue = _itemRepository.All().OrderByDescending(s => s.Id).FirstOrDefault();
 
-            item.Id = getLastIdValue.Id++;
+            //item.Id = getLastIdValue.Id++;
             item.Text = itemDTO.Text;
 
             this._itemRepository.Save(item);

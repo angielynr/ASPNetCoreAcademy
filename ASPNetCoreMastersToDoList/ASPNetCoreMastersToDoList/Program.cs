@@ -5,8 +5,10 @@ using Services;
 using Repositories;
 using ASPNetCoreMastersToDoList.Models;
 using ASPNetCoreMastersToDoList.Filters;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 // Add services to the container.
 
@@ -17,13 +19,15 @@ builder.Services.AddControllers(options =>
 });
 
 builder.Services.AddScoped<IItemService, ItemService>();
-builder.Services.AddScoped<IItemRepository, ItemRepository>();
-builder.Services.AddSingleton<DataContext>();
+builder.Services.AddScoped<IItemRepository, ItemEFCoreRepository>();
+//builder.Services.AddSingleton<DataContext>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<Authentication>(builder.Configuration.GetSection("Authentication:JWT"));
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

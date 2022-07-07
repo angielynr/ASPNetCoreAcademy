@@ -7,48 +7,50 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public class ItemRepository : IItemRepository
+    public class ItemEFCoreRepository : IItemRepository
     {
-        private readonly DataContext _dataContext;
-
-        public ItemRepository(DataContext dataContext)
+        private readonly AppDbContext _dbContext;
+        public ItemEFCoreRepository(AppDbContext dBContext)
         {
-            this._dataContext = dataContext;
+            _dbContext = dBContext;
         }
-
         public IQueryable<Item> All()
         {
-            return this._dataContext.Items.AsQueryable();
+            return _dbContext.Items.AsQueryable();
         }
 
         public void Delete(int id)
         {
-            var itemToBeDeleted = this._dataContext.Items.FirstOrDefault(x => x.Id == id);
+            var itemToBeDeleted = this._dbContext.Items.FirstOrDefault(x => x.Id == id);
 
             if (itemToBeDeleted != null)
             {
-                this._dataContext.Items.Remove(itemToBeDeleted);
+                this._dbContext.Items.Remove(itemToBeDeleted);
             }
+
+            _dbContext.SaveChanges();
         }
 
         public void Save(Item item)
         {
             if (item.Id == default)
             {
-                this._dataContext.Items.Add(item);
+                this._dbContext.Items.Add(item);
             }
             else
             {
-                var itemtoBeUpdated = this._dataContext.Items.FirstOrDefault(x => x.Id == item.Id);
+                var itemtoBeUpdated = this._dbContext.Items.FirstOrDefault(x => x.Id == item.Id);
                 if (itemtoBeUpdated == null)
                 {
-                    this._dataContext.Items.Add(item);
+                    this._dbContext.Items.Add(item);
                 }
                 else
                 {
                     itemtoBeUpdated.Text = item.Text;
                 }
             }
+
+            _dbContext.SaveChanges();
         }
     }
 }
